@@ -1,7 +1,7 @@
 CREATE DATABASE  IF NOT EXISTS `it210b` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `it210b`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
--- Can't figure out what is going on
+--
 -- Host: 192.168.1.50    Database: it210b
 -- ------------------------------------------------------
 -- Server version	5.5.31-0ubuntu0.12.04.2
