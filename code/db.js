@@ -9,3 +9,19 @@ connection file.  If you took IT210A this will be similar to the database
 connection file you made for PHP in Lab 3.
 **************************************************************************/
 
+var sequelize = new Sequelize('it210b', 'guest', 'guest', {
+    host: 'localhost',
+    dialect: 'mysql'|'mariadb'|'sqlite'|'postgres'|'mssql',
+
+    pool: {
+        max: 5,
+        min: 0,
+        idle: 10000
+    },
+
+    // SQLite only
+    storage: 'path/to/database.sqlite'
+});
+
+// Or you can simply use a connection uri
+var sequelize = new Sequelize('postgres://guest:guest@guest.com:1337/it210b');

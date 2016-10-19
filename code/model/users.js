@@ -2,7 +2,7 @@
 This model connects to the 'users' table in your database.
 *********************************************************/
 
-var	db = require('../db'), //This imports the database connection and makes it usable by this page.
+var	db = require('../db.js'), //This imports the database connection and makes it usable by this page.
   	sequelize = db.sequelize, //This imports the sequelize package to utilize in querying the database for information.
   	Sequelize = db.Sequelize; //This imports the exact database connection information from db.js for information.
 
