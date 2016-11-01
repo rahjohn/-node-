@@ -44,12 +44,21 @@
             <div class='nav-collapse collapse'>
                 <ul class='nav'>
                     <li id='home-nav-item'><a href='/memes'>Memes</a></li>
+                    <%if (user === 1) {%>
                     <li id='home-nav-item'><a href='/login'>Login</a></li>
+                    <%} else {%>
+                    <li id='home-nav-item'><a href='/memes/logout'>Logout</a></li>
+                    <%}%>
                 </ul>
                 <ul class='nav pull-right'>
                     <li><a href='#'>Welcome
                             <!--You will want to add code here (PART 2) to allow you to display a custom message if a user is logged in (Welcome Bob!) or a generic message if no one is logged into the site (Welcome Guest User).  Similarly,
                             if a user is not logged in you want a login button to display and no logout button, but if a user is logged in then you want to display a logout button.  You may need to break in and out of Node JS several times using "< % % >" and "< %= % >"-->
+                            <%if (user === 1){%>
+                            Guest User
+                            <%} else {%>
+                            <%= user.displayName%>!
+                            <%}%>
                         </a></li>
                 </ul>
             </div>
@@ -67,13 +76,10 @@
             Notice that the open bracket for the for loop starts here, but ends after the html, meaning that
             the html between will be printed each time through the loop-->
             <% for(i=0; i < imageList.length; i++ ){ %>
-
             <!-- The following line breaks out of html into NodeJS to process data passed to the view from the controller. The "< % % >" indicates that you are breaking out of and then back into html. -->
             <% for(j=0; j < userList.length; j++ ){ %>
-
             <!-- The following line breaks out of html into NodeJS to process data passed to the view from the controller. The "< % % >" indicates that you are breaking out of and then back into html. -->
             <% if (userList[j].userId === imageList[i].userId){ %>
-
             <!-- Here is are examples of printing out a variable's value with "< %= % >" -->
             <div class="pin back-image" id="block<%= imageList[i].imageId %>" >
                 <img src="<%=imageList[i].imagePath%>"   alt="<%=imageList[i].altText%>">
@@ -96,12 +102,10 @@
     var socket = io.connect('http://192.168.12.122:1337');//change this IP address to the IP address of your server.
 
     // on notification (socket updated) add the new meme(s) inside the '#columns' div. This notification is coming from server.js
-
     socket.on('notification', function (data) {
         var imagesListLength = data.images.length;
         var imageArray = data.images;
         var userArray = data.users;
-
         /* DO WORK HERE IN PART 2!  This gives you all of the information being passed from the socket to the browser.
          You need to figure out how to use that data to update the page when a new image is added to the database and the file structure.
          We recommend using the Jquery ".append()" function.  You will need a couple of for loops and if statements with the append() function.*/
@@ -111,21 +115,17 @@
     });
 
 
-
     // This function is called when the like button is clicked (see above where like button is added).
     function updateLikeCount(imageId, buttonId){
 
         //You will need to use socket.emit to send information to the server (server.js).  Use the function name (also called 'tag') 'button_click'.
     }
 
-
-
     // This function runs at the return of updateLikeCount (above) after it runs through the server.js file
     socket.on('return_click', function (newImage, buttonId){
 
         //You will need to add jquery here to update the text for the button containing the like count.
     });
-
 </script>
 </body>
 </html>
