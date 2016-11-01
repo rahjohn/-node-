@@ -96,7 +96,7 @@
 
 <script>
     // creating a new websocket
-    var socket = io.connect('http://192.168.12.122:1337');//change this IP address to the IP address of your server.
+    var socket = io.connect('http://bryce-aws.duckdns.org:1338');//change this IP address to the IP address of your server.
 
     // on notification (socket updated) add the new meme(s) inside the '#columns' div. This notification is coming from server.js
 
@@ -110,6 +110,15 @@
          We recommend using the Jquery ".append()" function.  You will need a couple of for loops and if statements with the append() function.*/
 
         //If you what the '<time></time>' div to update with a time stamp you will need to uncomment both that line and the following line.
+        var insideHTML = "";
+        for(i=0; i< imageArray.length; i++){
+            for(j=0; j< userArray.length; j++){
+                if(userArray[j].userId === imageArray[i].userId){
+                    insideHTML += '<div class="pin back-image" id="block' + imageArray[i].imageId + '" ><img src="' + imageArray[i].imagePath + '"   alt="' + imageArray[i].altText + '"><button class="btn btn-primary btn-mini float-left" id="like' + imageArray[i].imageId + '" type="button" onClick="updateLikeCount(' + imageArray[i].imageId + ', this.id);">Likes: ' + imageArray[i].numLikes + '</button><br><a class="btn btn-info btn-mini" style="margin-top:5px;" href="/memes/' + userArray[j].userName + '">More by ' + userArray[j].userName + '</a></div>';
+                }
+            }
+        }
+        $("#columns").html(insideHTML);
         $('time').html('Last Update:' + data.time);
     });
 
@@ -119,6 +128,11 @@
     function updateLikeCount(imageId, buttonId){
 
         //You will need to use socket.emit to send information to the server (server.js).  Use the function name (also called 'tag') 'button_click'.
+        <%if (user !== 1) {%>
+            socket.emit('button_click', imageId, buttonId);
+        <%} else {%>
+            alert("Please login to like images");
+        <%}%>
     }
 
 
@@ -127,6 +141,7 @@
     socket.on('return_click', function (newImage, buttonId){
 
         //You will need to add jquery here to update the text for the button containing the like count.
+        $("#" + buttonId).html("Likes: " + newImage.numLikes);
     });
 
 </script>

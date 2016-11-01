@@ -29,9 +29,9 @@ exports.setup = function (app) {
 
     //Uncomment and fix the next line
     app.get('/memes/:id/view', render_function('view', exports.view));
-    app.get('/memes/:userName', render_function('view', exports.userNameView));
     app.get('/memes/user', redirect_function('/memes', exports.users));
     app.get('/memes/logout', redirect_function('/memes', exports.logout));
+    app.get('/memes/:userName', render_function('view', exports.userNameView));
 };
 
 /* This is the function called by the router.  This is the actual controller
