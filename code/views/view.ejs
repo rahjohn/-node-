@@ -38,19 +38,24 @@
 				<div class='nav-collapse collapse'>
 					<ul class='nav'>
 						<li id='home-nav-item'><a href='/memes'>Memes</a></li>
+						<%if (user === 1) {%>
 						<li id='home-nav-item'><a href='/login'>Login</a></li>
-
+						<%} else {%>
+						<li id='home-nav-item'><a href='/memes/logout'>Logout</a></li>
+						<%}%>
 					</ul>
 					<ul class='nav pull-right'>
-						<li><a href='#'>
+						<li><a href='#'>Welcome
 
 								<!--You will want to add code here (PART 2) to allow you to display a custom message if a user is logged in (Welcome Bob!) or a generic message if no one is logged into the site (Welcome Guest User).  Similarly,
                                 if a user is not logged in you want a login button to display and no logout button, but if a user is logged in then you want to display a logout button.  You may need to break in and out of Node JS several times using "< % % >" and "< %= % >"-->
 
+								<!--You will want to add code here (PART 2) to allow you to display a custom message if a user is logged in (Welcome Bob!) or a generic message if no one is logged into the site (Welcome Guest User).  Similarly,
+                                if a user is not logged in you want a login button to display and no logout button, but if a user is logged in then you want to display a logout button.  You may need to break in and out of Node JS several times using "< % % >" and "< %= % >"-->
 								<%if (user === 1){%>
-								Welcome Guest User
+								Guest User
 								<%} else {%>
-								Welcome Rachel!
+								<%= user.displayName%>!
 								<%}%>
 							</a></li>
 					</ul>
