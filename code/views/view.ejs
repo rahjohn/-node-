@@ -1,4 +1,3 @@
-
 <%/****************************************************************************************
  This comment is inside JavaScript exit marks, so it will not render on that HTML page.
  This page contains the HTML for the /memes path.  This page is populated with images from
@@ -42,6 +41,7 @@
                     <li id='home-nav-item'><a href='/login'>Login</a></li>
                     <%} else {%>
                     <li id='home-nav-item'><a href='/memes/logout'>Logout</a></li>
+		    <li id='home-nav-item'><a href='http://192.168.217.130/Default.aspx?email=<%=user._json.email%>&name=<%=user.name.givenName%>'>Create Meme</a></li>
                     <%}%>
                 </ul>
                 <ul class='nav pull-right'>
@@ -96,7 +96,7 @@
 
 <script>
     // creating a new websocket
-    var socket = io.connect('http://bryce-aws.duckdns.org:1338');//change this IP address to the IP address of your server.
+    var socket = io.connect('http://192.168.12.122:1337');//change this IP address to the IP address of your server.
 
     // on notification (socket updated) add the new meme(s) inside the '#columns' div. This notification is coming from server.js
 

@@ -16,9 +16,10 @@ var Users = users.Users; //This allows the information from the users table in t
 var db = require('../db'); //This imports the database connection and makes it usable by this page.
 var sequelize = db.sequelize; //This imports the the sequelize package to utilize in querying the database for information.
 var Sequelize = db.Sequelize; //This imports the the Exact database connection information from db.js
+var Uploaded = 1;
 
 
-/* This is the router for the controller.  It takes a path /memes, routes it to the 
+/* This is the router for the controller.  It takes a path /memes, routes it to the
  render function 'memes' and then exports.memes exports the returned data for use in
  other controllers if needed.*/
 exports.setup = function (app) {
@@ -39,7 +40,7 @@ exports.setup = function (app) {
 exports.memes = function (req, res, callback) { //Function exports.views will be almost exactly the same as this function, with additional filtering (images for only one user).
     async.auto({
             getData: function get_data(callback) {
-                Images.all() //Function returns information for all images.  Similar to 'select * from images;'
+                Images.all({where: {uploaded: Uploaded}}) //Function returns information for all images.  Similar to 'select * from images;'
                     .then(function (getData) {
                         callback(null, getData); //On a successful query the results are returned in the object 'getData'
                     })
@@ -79,14 +80,14 @@ exports.memes = function (req, res, callback) { //Function exports.views will be
 }
 
 /* Do WORK IN THE FUNCTION BELOW FOR PART 1! You will insert a controller below for the new function that
- you are creating to manage a view for a specified user.  The easiest way to do this is to 
- pass the userId of the user that they clicked on to the URL and then use req.params.id 
+ you are creating to manage a view for a specified user.  The easiest way to do this is to
+ pass the userId of the user that they clicked on to the URL and then use req.params.id
  to get that parameter from the URL.  This function will be almost exactly the same as the function above
  called exports.memes, except for using the req.params.id to filter which images should be displayed on the page */
 exports.view = function (req, res, callback) {
     async.auto({
             getData: function get_data(callback) {
-                Images.all({where: {userId: req.params.id}}) //Function returns information for all images.  Similar to 'select * from images;'
+                Images.all({where: {userId: req.params.id}}, {where: {uploaded: Uploaded}}) //Function returns information for all images.  Similar to 'select * from images;'
                     .then(function (getData) {
                         callback(null, getData); //On a successful query the results are returned in the object 'getData'
                     })
@@ -234,7 +235,7 @@ exports.logout = function (req, res, callback) {
 }
 
 
-/*The following function checks for authentication when trying to access the web application.  To protect any page, just add 
+/*The following function checks for authentication when trying to access the web application.  To protect any page, just add
  'ensureAuthenticated' in a similar position as in App Function 1 in server.js. You probably don't need to */
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {

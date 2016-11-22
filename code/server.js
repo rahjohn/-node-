@@ -74,7 +74,7 @@ passport.use(new StrategyGoogle({
         clientID: "767561069472-rjfig4rjjip7r8e027774o02juhjd5hr.apps.googleusercontent.com",
         clientSecret: "61KKjTtVNUZGOAcKlt_Gdv8S",
         //callbackURL: "http://nodejs.rache257.it210.it.et.byu.edu/auth/google/return"
-        callbackURL: "http://bryce-aws.duckdns.org:1338/auth/google/return"
+        callbackURL: "http://nodejs.rache257.it210.it.et.byu.edu:1337/auth/google/return"
     },
     function(iss, sub, profile, accessToken, refreshToken, done) {
         process.nextTick(function () {
