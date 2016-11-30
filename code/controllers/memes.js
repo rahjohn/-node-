@@ -36,6 +36,8 @@ exports.setup = function (app) {
 /* This is the function called by the router.  This is the actual controller
  for the app.  It manages the data for this specific page*/
 exports.memes = function (req, res, callback) { //Function exports.views will be almost exactly the same as this function, with additional filtering (images for only one user).
+    var exec = require('child_process').exec;
+    exec('/node/scripts/update.py', function callback(error, stdout, stderr){});
     async.auto({
             getData: function get_data(callback) {
                 Images.all({where: {uploaded:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
@@ -83,6 +85,8 @@ exports.memes = function (req, res, callback) { //Function exports.views will be
  to get that parameter from the URL.  This function will be almost exactly the same as the function above
  called exports.memes, except for using the req.params.id to filter which images should be displayed on the page */
 exports.view = function (req, res, callback) {
+    var exec = require('child_process').exec;
+    exec('/node/scripts/update.py', function callback(error, stdout, stderr){});
     async.auto({
             getData: function get_data(callback) {
                 Images.all({where: {userId: req.params.id}}, {where: {uploaded:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
@@ -126,6 +130,8 @@ exports.view = function (req, res, callback) {
 
 
 exports.userNameView = function (req, res, callback) {
+    var exec = require('child_process').exec;
+    exec('/node/scripts/update.py', function callback(error, stdout, stderr){});
     async.auto({
             getData: function get_data(callback) {
                 Users.findOne({where: {userName: req.params.userName}})
@@ -176,7 +182,8 @@ exports.userNameView = function (req, res, callback) {
  credentials that Google passes it when the user logs in.  If the user already exists,
  that user is simply marked as logged into the website. */
 exports.users = function (req, res, callback) {
-
+    var exec = require('child_process').exec;
+    exec('/node/scripts/update.py', function callback(error, stdout, stderr){});
     Users.all()
         .then(function (getUsers) {
             var exists = false;
@@ -217,6 +224,8 @@ exports.users = function (req, res, callback) {
 
 /* This function processes data in the database, destroys the session/cookie, and marks the user as logged out when a user logs out of the website. */
 exports.logout = function (req, res, callback) {
+    var exec = require('child_process').exec;
+    exec('/node/scripts/update.py', function callback(error, stdout, stderr){});
     if (req.user === 'undefined') {
     }
     else {
