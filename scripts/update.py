@@ -1,6 +1,9 @@
 #!/usr/bin/python
 import MySQLdb
 import subprocess
+import os
+import PIL
+from PIL import Image
 
 db = MySQLdb.connect(host="localhost",
                      user="guest",
@@ -9,9 +12,25 @@ db = MySQLdb.connect(host="localhost",
 cur = db.cursor()
 cur.execute("SELECT imagePath FROM images where uploaded=0")
 cur2 = db.cursor()
+print "something"
 for row in cur.fetchall():
-    subprocess.call(["wget", "-P", "/node/code/assets/images/", "-r", "-nH", "--cut-dirs=2", "--no-parent", "http://192.168.217.130/images/edit/" + row[0]])
+    print "Tyler is hot"
+    print row[0]
+    if subprocess.call(["wget", "-cP", "/tmp/", "http://192.168.230.117/images/edit/" + os.path.basename(row[0])]) == 0:
     #subprocess.call(["rm", "/node/code/assets/images/index.html"])
-    cur2.execute("UPDATE images set uploaded=1 WHERE imagePath=" + "\'" + row[0] + "\'")
+	img = Image.open("/tmp/" + os.path.basename(row[0]))
+        basewidth = 500
+        wpercent = basewidth / float(img.size[0])
+        hsize = int((float(img.size[1]) * float(wpercent)))
+        img2 = img.resize((basewidth, hsize), PIL.Image.ANTIALIAS)
+        img.close()
+        try: 
+            img2.save("/node/code/assets/images/" + os.path.basename(row[0]))
+        except:
+            pass
+        else:
+            cur2.execute("UPDATE images set uploaded=1 where imagePath=\'" + row[0] + "\'")
+            os.remove("/tmp/" + os.path.basename(row[0]))
 db.commit()
 db.close()
+print "this is dumb"

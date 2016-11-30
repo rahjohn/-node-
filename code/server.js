@@ -207,7 +207,7 @@ io.sockets.on( 'connection', function ( socket ) {
 /*This function grabs images and users from the database and sends them to the connected clients.
  THIS WILL BE USED IN PART 2 OF THE LAB. YOU SHOULDN'T HAVE TO CHANGE ANYTHING HERE.*/
 var pollingLoop = function () {
-    var query = Images.all(),
+    var query = Images.all({where: {uploaded:1 }}),
         images = [];
     query.catch(function(err){
         console.log("**"+ err +"**");

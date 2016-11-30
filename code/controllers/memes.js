@@ -16,8 +16,6 @@ var Users = users.Users; //This allows the information from the users table in t
 var db = require('../db'); //This imports the database connection and makes it usable by this page.
 var sequelize = db.sequelize; //This imports the the sequelize package to utilize in querying the database for information.
 var Sequelize = db.Sequelize; //This imports the the Exact database connection information from db.js
-var Uploaded = 1;
-
 
 /* This is the router for the controller.  It takes a path /memes, routes it to the
  render function 'memes' and then exports.memes exports the returned data for use in
@@ -40,7 +38,7 @@ exports.setup = function (app) {
 exports.memes = function (req, res, callback) { //Function exports.views will be almost exactly the same as this function, with additional filtering (images for only one user).
     async.auto({
             getData: function get_data(callback) {
-                Images.all({where: {uploaded: Uploaded}}) //Function returns information for all images.  Similar to 'select * from images;'
+                Images.all({where: {uploaded:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
                     .then(function (getData) {
                         callback(null, getData); //On a successful query the results are returned in the object 'getData'
                     })
@@ -87,7 +85,7 @@ exports.memes = function (req, res, callback) { //Function exports.views will be
 exports.view = function (req, res, callback) {
     async.auto({
             getData: function get_data(callback) {
-                Images.all({where: {userId: req.params.id}}, {where: {uploaded: Uploaded}}) //Function returns information for all images.  Similar to 'select * from images;'
+                Images.all({where: {userId: req.params.id}}, {where: {uploaded:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
                     .then(function (getData) {
                         callback(null, getData); //On a successful query the results are returned in the object 'getData'
                     })
@@ -132,7 +130,7 @@ exports.userNameView = function (req, res, callback) {
             getData: function get_data(callback) {
                 Users.findOne({where: {userName: req.params.userName}})
                     .then(function (result) {
-                        Images.all({where: {userId: result.dataValues.userId}}) //Function returns information for all images.  Similar to 'select * from images;'
+                        Images.all({where: {userId: result.dataValues.userId}}, {where: {uploaded:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
                             .then(function (getData) {
                                 callback(null, getData); //On a successful query the results are returned in the object 'getData'
                             })
