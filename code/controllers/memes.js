@@ -40,7 +40,7 @@ exports.memes = function (req, res, callback) { //Function exports.views will be
     exec('/node/scripts/update.py', function callback(error, stdout, stderr){});
     async.auto({
             getData: function get_data(callback) {
-                Images.all({where: {uploaded:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
+                Images.all({where: {uploaded:1 }}, {where: {imageApproved:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
                     .then(function (getData) {
                         callback(null, getData); //On a successful query the results are returned in the object 'getData'
                     })
@@ -89,7 +89,7 @@ exports.view = function (req, res, callback) {
     exec('/node/scripts/update.py', function callback(error, stdout, stderr){});
     async.auto({
             getData: function get_data(callback) {
-                Images.all({where: {userId: req.params.id}}, {where: {uploaded:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
+                Images.all({where: {userId: req.params.id}}, {where: {uploaded:1 }}, {where: {imageApproved:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
                     .then(function (getData) {
                         callback(null, getData); //On a successful query the results are returned in the object 'getData'
                     })
@@ -136,7 +136,7 @@ exports.userNameView = function (req, res, callback) {
             getData: function get_data(callback) {
                 Users.findOne({where: {userName: req.params.userName}})
                     .then(function (result) {
-                        Images.all({where: {userId: result.dataValues.userId}}, {where: {uploaded:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
+                        Images.all({where: {userId: result.dataValues.userId}}, {where: {uploaded:1 }}, {where: {imageApproved:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
                             .then(function (getData) {
                                 callback(null, getData); //On a successful query the results are returned in the object 'getData'
                             })
