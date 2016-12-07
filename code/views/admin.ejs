@@ -156,7 +156,7 @@ Delete a user:
 <script>
     function alertMe(userName){
         if(confirm("Are you sure you want to delete " + userName + "?") == true){
-            window.location.replace("//192.168.12.122:1337/deleteUser/" + userName);
+            window.location.replace("/deleteUser/" + userName);
         }
     }
     /* When the user clicks on the button,
@@ -179,11 +179,6 @@ Delete a user:
             }
         }
     }
-    function alertMe1(altText){
-        if(confirm("Are you sure you want to delete " + altText + "?") == true){
-            window.location.replace("//192.168.12.122:1337/deleteImage/" + altText);
-        }
-    }
     /* When the user clicks on the button,
      toggle between hiding and showing the dropdown content */
     function myFunction1() {
@@ -191,7 +186,7 @@ Delete a user:
     }
     function alertMe1(altText){
         if(confirm("Are you sure you want to delete " + altText + "?") == true){
-            window.location.replace("/approveImage/" + altText);
+            window.location.replace("/deleteImage/" + altText);
         }
     }
     /* When the user clicks on the button,
