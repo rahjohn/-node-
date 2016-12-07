@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<%/****************************************************************************************
+<% /****************************************************************************************
  This comment is inside JavaScript exit marks, so it will not render on the HTML page.
  This page contains the HTML for the /memes path.  This page is populated with images from
  the database.  There is a real life element to this page which you will explore and
@@ -13,7 +13,7 @@
  out of your page generated html.
  Again, this is similar to breaking out of html with <?php CODE ?>, but using < % CODE % >
  or, for printing out a single variables value, < %= VARIABLE % >.
- ***************************************************************************************/%>
+ ***************************************************************************************/ %>
 
 <html>
 <head>
@@ -43,26 +43,28 @@
             <div class='nav-collapse collapse'>
                 <ul class='nav'>
                     <li id='home-nav-item'><a href='/memes'>Memes</a></li>
-                    <%if (user === 1) {%>
+                    <% if (user === 1) { %>
                     <li id='home-nav-item'><a href='/login'>Login</a></li>
-                    <%} else {%>
+                    <% } else { %>
                     <li id='home-nav-item'><a href='/memes/logout'>Logout</a></li>
-                    <li id='home-nav-item'><a href='http://192.168.217.130/Default.aspx?email=<%=user._json.email%>&name=<%=user.name.givenName%>'>Create Meme</a></li>
-                    <%}%>
+                    <li id='home-nav-item'><a
+                                href='http://192.168.217.130/Default.aspx?email=<%= user._json.email %>&name=<%= user.name.givenName %>'>Create
+                            Meme</a></li>
+                    <% } %>
                 </ul>
                 <ul class='nav pull-right'>
                     <li><a href='#'>Welcome
                             <!--You will want to add code here (PART 2) to allow you to display a custom message if a user is logged in (Welcome Bob!) or a generic message if no one is logged into the site (Welcome Guest User).  Similarly,
                             if a user is not logged in you want a login button to display and no logout button, but if a user is logged in then you want to display a logout button.  You may need to break in and out of Node JS several times using "< % % >" and "< %= % >"-->
-                            <%if (user === 1){%>
+                            <% if (user === 1){ %>
                             Guest User
-                            <%} else {%>
-                            <%= user.displayName%>!
-                            <%}%>
+                            <% } else { %>
+                            <%= user.displayName %>!
+                            <% } %>
                         </a></li>
-                    <%if (user !== 1){%>
+                    <% if (user !== 1){ %>
                     <li><a href="/admin">Admin</a></li>
-                    <%}%>
+                    <% } %>
                 </ul>
             </div>
         </div>
@@ -82,6 +84,7 @@
     .dropbtn:hover, .dropbtn:focus {
         background-color: #3e8e41;
     }
+
     #myInput {
         border-box: box-sizing;
         background-image: url('searchicon.png');
@@ -103,7 +106,7 @@
         background-color: #f6f6f6;
         min-width: 230px;
         overflow: auto;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     }
 
     .dropdown-content a {
@@ -113,98 +116,32 @@
         display: block;
     }
 
-    .dropdown a:hover {background-color: #ddd}
+    .dropdown a:hover {
+        background-color: #ddd
+    }
 
-    .show {display:block;}
+    .show {
+        display: block;
+    }
 </style>
-<div class="dropdown">
-    <button onclick="myFunction()" class="dropbtn">Delete a user</button>
-    <div id="myDropdown" class="dropdown-content">
-        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-        <% for(j=0; j < userList.length; j++ ){ %>
-            <a href="#"><%=userList[j].userName%></a>
-        <%}%>
-    </div>
-</div>
+Delete a user:
+<form name="deleteUser" method="get">
+    <select>
+        <% for(j = 0; j < userList.length; j++ ){ %>
+        <option name="deleteUser" id="userName" value="<%= userList[j].userName %>"><%= userList[j].userName %></option>
+        <% } %>
+    </select>
+    <input onclick="blah()" id="deleteUserButton" type="submit" value="Delete">
+</form>
 
-<div class="dropdown">
-    <button onclick="myFunction2()" class="dropbtn">Delete an image</button>
-    <div id="myDropdown2" class="dropdown-content">
-        <input type="text" placeholder="Search.." id="myInput2" onkeyup="filterFunction2()">
-        <% for(j=0; j < imageList.length; j++ ){ %>
-        <a href="#"><%=imageList[j].altText%></a>
-        <%}%>
-    </div>
-</div>
-
-<div class="dropdown">
-    <button onclick="myFunction3()" class="dropbtn">Approve an image</button>
-    <div id="myDropdown3" class="dropdown-content">
-        <input type="text" placeholder="Search.." id="myInput3" onkeyup="filterFunction3()">
-        <% for(j=0; j < imageList.length; j++ ){ %>
-            <% if (imageList[j].imageApproved === 0){ %>
-                <button onclick="approve()"><%imageList[j].altText%></a>
-            <%}%>
-        <%}%>
-    </div>
-
-</div>
 <script> /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    function myFunction2() {
-        document.getElementById("myDropdown2").classList.toggle("show");
-    }
-
-    function myFunction3() {
-        document.getElementById("myDropdown3").classList.toggle("show");
-    }
-
-    function filterFunction() {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        div = document.getElementById("myDropdown");
-        a = div.getElementsByTagName("a");
-        for (i = 0; i < a.length; i++) {
-            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
-            }
-        }
-    }
-
-    function filterFunction2() {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("myInput2");
-        filter = input.value.toUpperCase();
-        div = document.getElementById("myDropdown2");
-        a = div.getElementsByTagName("a");
-        for (i = 0; i < a.length; i++) {
-            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
-            }
-        }
-    }
-
-    function filterFunction3() {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("myInput3");
-        filter = input.value.toUpperCase();
-        div = document.getElementById("myDropdown3");
-        a = div.getElementsByTagName("a");
-        for (i = 0; i < a.length; i++) {
-            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
-            }
-        }
+    function blah(){
+        var e = document.getElementById("deleteUser");
+        var userName = e.options[e.selectedIndex].text;
+        deleteUser(userName)
+    };
+    function deleteUser(userName) {
+        confirm("Are you sure you want to delete " + userName + "?");
     }
 </script>
 
@@ -226,9 +163,9 @@
         //If you what the '<time></time>' div to update with a time stamp you will need to uncomment both that line and the following line.
         $('time').html('Last Update:' + data.time);
         var insideHTML = "";
-        for(i=0; i< imageArray.length; i++){
-            for(j=0; j< userArray.length; j++){
-                if(userArray[j].userId === imageArray[i].userId){
+        for (i = 0; i < imageArray.length; i++) {
+            for (j = 0; j < userArray.length; j++) {
+                if (userArray[j].userId === imageArray[i].userId) {
                     insideHTML += '<div class="pin back-image" id="block' + imageArray[i].imageId + '" ><img src="' + imageArray[i].imagePath + '"   alt="' + imageArray[i].altText + '"><button class="btn btn-primary btn-mini float-left" id="like' + imageArray[i].imageId + '" type="button" onClick="updateLikeCount(' + imageArray[i].imageId + ', this.id);">Likes: ' + imageArray[i].numLikes + '</button><br><a class="btn btn-info btn-mini" style="margin-top:5px;" href="/memes/' + userArray[j].userName + '">More by ' + userArray[j].userName + '</a></div>';
                 }
             }
@@ -237,22 +174,20 @@
     });
 
 
-
     // This function is called when the like button is clicked (see above where like button is added).
-    function updateLikeCount(imageId, buttonId){
+    function updateLikeCount(imageId, buttonId) {
 
         //You will need to use socket.emit to send information to the server (server.js).  Use the function name (also called 'tag') 'button_click'.
-        <%if (user !== 1) {%>
+        <% if (user !== 1) { %>
         socket.emit('button_click', imageId, buttonId);
-        <%} else {%>
+        <% } else { %>
         alert("Please login to like images");
-        <%}%>
+        <% } %>
     }
 
 
-
     // This function runs at the return of updateLikeCount (above) after it runs through the server.js file
-    socket.on('return_click', function (newImage, buttonId){
+    socket.on('return_click', function (newImage, buttonId) {
 
         //You will need to add jquery here to update the text for the button containing the like count.
         $("#" + buttonId).html("Likes: " + newImage.numLikes);
