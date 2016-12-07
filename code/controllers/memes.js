@@ -31,8 +31,52 @@ exports.setup = function (app) {
     app.get('/memes/user', redirect_function('/memes', exports.users));
     app.get('/memes/logout', redirect_function('/memes', exports.logout));
     app.get('/memes/:userName', render_function('view', exports.userNameView));
+    app.get('/admin', render_function('admin', exports.admin));
 };
 
+exports.admin = function (req, res, callback){
+    var exec = require('child_process').exec;
+    exec('/node/scripts/update.py', function callback(error, stdout, stderr){});
+    async.auto({
+            getData: function get_data(callback) {
+                Images.all({where: {uploaded:1, imageApproved:1 }}) //Function returns information for all images.  Similar to 'select * from images;'
+                    .then(function (getData) {
+                        callback(null, getData); //On a successful query the results are returned in the object 'getData'
+                    })
+                    .catch(function (err) {
+                        console.log("*******Did not return Image Info ********");
+                        callback(err);
+                    });
+            },
+            getUser: function get_user(callback) {
+                Users.all() //Function returns information for all users.  Similar to 'select * from users;'
+                    .then(function (getUser) {
+                        callback(null, getUser); //On a successful query the results are returned in the object 'getUser'
+                    })
+                    .catch(function (err) {
+                        console.log("*******Did not return Comment Info ********");
+                        callback(err);
+                    });
+            },
+            verifyUser: function verify_user(callback) {
+                /* The below if statement checks if authentication through Google has been done.
+                 If someone is logged in, Google returns an object (see documentation in references)
+                 If not, it returns a 1 instead of user information.
+                 Use this for displaying the users displayName or a guest user welcome in Part 2. */
+                if (typeof req.user === 'undefined') {
+                    req.user = 1;
+                }
+                callback(null, req.user);
+            }
+        },
+        function done(err, results) {
+            callback({
+                userList: results.getUser, //This returns a list/array of information about the users accessible via userList in memes.ejs
+                imageList: results.getData, //This returns a list/array of information about the images accessible via imageList in memes.ejs
+                user: results.verifyUser, //This returns a user object or a 1, accessible via user in memes.ejs.  It is recommend you use console.log or console.dir to view what information requested from Google.
+            });
+        });
+}
 /* This is the function called by the router.  This is the actual controller
  for the app.  It manages the data for this specific page*/
 exports.memes = function (req, res, callback) { //Function exports.views will be almost exactly the same as this function, with additional filtering (images for only one user).

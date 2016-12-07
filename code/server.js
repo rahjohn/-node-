@@ -164,13 +164,13 @@ io.sockets.on( 'connection', function ( socket ) {
      THIS WILL BE USED IN PART 2 OF THE LAB. YOU SHOULDN'T HAVE TO CHANGE ANYTHING HERE. */
     socket.on('button_click', function (imageId, buttonId){
         var count;
-        Images.find({ where: {imageId: imageId}}, {where: {imageApproved:1 }}) //Find image with correct id
+        Images.find({ where: {imageId: imageId}}) //Find image with correct id
             .then(function(image){
                 count = image.numLikes + 1  //Increment likes
 
                 image.updateAttributes({numLikes:count}) //Update the database
                     .then(function(){
-                        Images.find({ where: {imageId: imageId}}, {where: {imageApproved:1 }}) //Find updated image
+                        Images.find({ where: {imageId: imageId}}) //Find updated image
                             .then(function(newImage){
                                 connectionsArray.forEach(function(tmpSocket){
                                     tmpSocket.volatile.emit('return_click' , newImage, buttonId ); //Send the updated information to all clients (views i.e. memes.ejs) with the 'return_click' function ID.
