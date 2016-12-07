@@ -136,10 +136,20 @@ Delete a user:
     </div>
 </div>
 <div class="dropdown">
-    <button onclick="myFunction()" class="dropbtn">Delete a Picture</button>
-    <div id="myDropdown" class="dropdown-content">
-        <% for(j = 0; j < userList.length; j++ ){ %>
-        <a onclick="alertMe('<%=userList[j].userName%>')" href="#"><%=userList[j].userName%></a>
+    <button onclick="myFunction1()" class="dropbtn">Delete a Picture</button>
+    <div id="myDropdown1" class="dropdown-content">
+        <% for(j = 0; j < imageList.length; j++ ){ %>
+        <a onclick="alertMe1('<%=imageList[j].altText%>')" href="#"><%=imageList[j].altText%></a>
+        <%}%>
+    </div>
+</div>
+<div class="dropdown">
+    <button onclick="myFunction2()" class="dropbtn">Approve a Picture</button>
+    <div id="myDropdown2" class="dropdown-content">
+        <% for(j = 0; j < imageList.length; j++ ){ %>
+            <%if (imageList[j].imageApproved == 0){%>
+                <a onclick="alertMe2('<%=imageList[j].altText%>')" href="#"><%=imageList[j].altText%></a>
+            <%}%>
         <%}%>
     </div>
 </div>
@@ -167,6 +177,31 @@ Delete a user:
                     openDropdown.classList.remove('show');
                 }
             }
+        }
+    }
+    function alertMe1(altText){
+        if(confirm("Are you sure you want to delete " + altText + "?") == true){
+            window.location.replace("//192.168.12.122:1337/deleteImage/" + altText);
+        }
+    }
+    /* When the user clicks on the button,
+     toggle between hiding and showing the dropdown content */
+    function myFunction1() {
+        document.getElementById("myDropdown1").classList.toggle("show");
+    }
+    function alertMe1(altText){
+        if(confirm("Are you sure you want to delete " + altText + "?") == true){
+            window.location.replace("/approveImage/" + altText);
+        }
+    }
+    /* When the user clicks on the button,
+     toggle between hiding and showing the dropdown content */
+    function myFunction2() {
+        document.getElementById("myDropdown2").classList.toggle("show");
+    }
+    function alertMe2(altText){
+        if(confirm("Are you sure you want to approve " + altText + "?") == true){
+            window.location.replace("/approveImage/" + altText);
         }
     }
 </script>
