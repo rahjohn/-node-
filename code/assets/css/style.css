@@ -1,5 +1,8 @@
 * {font-family:arial, sans-serif;}
 
+.new{
+	text-color: white;
+}
 .navbar-inner{
 	webkit-border radius:0px;
 	border-radius:0px;
