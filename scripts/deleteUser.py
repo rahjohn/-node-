@@ -21,7 +21,7 @@ for row in cur.fetchall():
     cur2.execute("SELECT imagePath from images where userId=\'" + str(row[0]) + "\'")
     for row2 in cur2.fetchall():
         # row2[0] is imagePath
-        os.remove("/home/webadmin/node/code/assets" + str(row2[0]))
+        os.remove("/node/code/assets" + str(row2[0]))
     cur3 = db.cursor()
     cur3.execute("DELETE from images where userId=\'" + str(row[0]) + "\'")
 
