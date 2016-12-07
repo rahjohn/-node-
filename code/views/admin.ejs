@@ -117,27 +117,49 @@
 
     .show {display:block;}
 </style>
-<div class="new" class="dropdown">
+<div class="dropdown">
     <button onclick="myFunction()" class="dropbtn">Delete a user</button>
     <div id="myDropdown" class="dropdown-content">
         <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-        <% for(i=0; i < imageList.length; i++ ){ %>
-            <!-- The following line breaks out of html into NodeJS to process data passed to the view from the controller. The "< % % >" indicates that you are breaking out of and then back into html. -->
-            <% for(j=0; j < userList.length; j++ ){ %>
-                <!-- The following line breaks out of html into NodeJS to process data passed to the view from the controller. The "< % % >" indicates that you are breaking out of and then back into html. -->
-                <% if (userList[j].userId === imageList[i].userId){ %>
-                    <a href="#<%=userList[j].userName%>"><%=userList[j].userName%></a>
-                <%}%>
-            <%}%>
+        <% for(j=0; j < userList.length; j++ ){ %>
+            <a href="#"><%=userList[j].userName%></a>
         <%}%>
     </div>
 </div>
 
-<script>
-    /* When the user clicks on the button,
-     toggle between hiding and showing the dropdown content */
+<div class="dropdown">
+    <button onclick="myFunction2()" class="dropbtn">Delete an image</button>
+    <div id="myDropdown2" class="dropdown-content">
+        <input type="text" placeholder="Search.." id="myInput2" onkeyup="filterFunction2()">
+        <% for(j=0; j < imageList.length; j++ ){ %>
+        <a href="#"><%=imageList[j].altText%></a>
+        <%}%>
+    </div>
+</div>
+
+<div class="dropdown">
+    <button onclick="myFunction3()" class="dropbtn">Approve an image</button>
+    <div id="myDropdown3" class="dropdown-content">
+        <input type="text" placeholder="Search.." id="myInput3" onkeyup="filterFunction3()">
+        <% for(j=0; j < imageList.length; j++ ){ %>
+            <% if (imageList[j].imageApproved === 0){ %>
+                <button onclick="approve()"><%imageList[j].altText%></a>
+            <%}%>
+        <%}%>
+    </div>
+
+</div>
+<script> /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
     function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    function myFunction2() {
+        document.getElementById("myDropdown2").classList.toggle("show");
+    }
+
+    function myFunction3() {
+        document.getElementById("myDropdown3").classList.toggle("show");
     }
 
     function filterFunction() {
@@ -145,6 +167,36 @@
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
         div = document.getElementById("myDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+
+    function filterFunction2() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput2");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myDropdown2");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+            if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+
+    function filterFunction3() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput3");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myDropdown3");
         a = div.getElementsByTagName("a");
         for (i = 0; i < a.length; i++) {
             if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
