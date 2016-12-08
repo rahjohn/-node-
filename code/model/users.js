@@ -12,7 +12,8 @@ var Users = sequelize.define('users', {
 	userName: Sequelize.STRING,
 	email: Sequelize.STRING,
 	password: Sequelize.STRING,
-	loggedIn: Sequelize.INTEGER
+	loggedIn: Sequelize.INTEGER,
+	admin: Sequelize.BOOLEAN
 });
 
 
