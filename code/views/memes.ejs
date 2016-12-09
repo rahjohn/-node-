@@ -57,15 +57,16 @@
                             if a user is not logged in you want a login button to display and no logout button, but if a user is logged in then you want to display a logout button.  You may need to break in and out of Node JS several times using "< % % >" and "< %= % >"-->
                             <%if (user === 1){%>
                             Guest User
-                            <%} else {%>
-                            <%= user.displayName%>!
-                            <%}%>
                         </a></li>
-                    <% for(j=0; j < userList.length; j++ ){
-                        if (userList[j].userName == user.name.givenName && userList[j].admin == 1){ %>
-                            <li><a href="/admin">Admin</a></li>
-                        <%}%>
-                    <%}%>
+                            <%} else {%>
+                                <%= user.displayName%>!
+                            </a></li>
+                                <%for (j=0; j<userList.length; j++){%>
+                                    <%if (userList[j].userName == user.name.givenName && userList[j].admin == 1){%>
+                                        <li><a href="/admin">Admin</a></li>
+                                    <%}%>
+                                <%}%>
+                            <%}%>
                 </ul>
             </div>
         </div>
