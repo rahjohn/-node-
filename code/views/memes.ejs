@@ -61,9 +61,10 @@
                             <%= user.displayName%>!
                             <%}%>
                         </a></li>
-                    <%for(j=0; j<userList.length, j++){
-                        if (userList[j].userName == user.name.givenName && userList[j].admin == 1){%>
-                        <li><a href="/admin">Admin</a></li>
+                    <% for(j=0; j < userList.length; j++ ){
+                        if (userList[j].userName == user.name.givenName && userList[j].admin == 1){ %>
+                            <li><a href="/admin">Admin</a></li>
+                        <%}%>
                     <%}%>
                 </ul>
             </div>
