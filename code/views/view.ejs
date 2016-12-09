@@ -41,25 +41,24 @@
                     <li id='home-nav-item'><a href='/login'>Login</a></li>
                     <%} else {%>
                     <li id='home-nav-item'><a href='/memes/logout'>Logout</a></li>
-		    <li id='home-nav-item'><a href='http://192.168.230.126/Default.aspx?email=<%=user._json.email%>&name=<%=user.name.givenName%>'>Create Meme</a></li>
+		    <li id='home-nav-item'><a href='http://192.168.190.d53/Default.aspx?email=<%=user._json.email%>&name=<%=user.name.givenName%>'>Create Meme</a></li>
                     <%}%>
                 </ul>
                 <ul class='nav pull-right'>
                     <li><a href='#'>Welcome
-
-                            <!--You will want to add code here (PART 2) to allow you to display a custom message if a user is logged in (Welcome Bob!) or a generic message if no one is logged into the site (Welcome Guest User).  Similarly,
-                            if a user is not logged in you want a login button to display and no logout button, but if a user is logged in then you want to display a logout button.  You may need to break in and out of Node JS several times using "< % % >" and "< %= % >"-->
-
                             <!--You will want to add code here (PART 2) to allow you to display a custom message if a user is logged in (Welcome Bob!) or a generic message if no one is logged into the site (Welcome Guest User).  Similarly,
                             if a user is not logged in you want a login button to display and no logout button, but if a user is logged in then you want to display a logout button.  You may need to break in and out of Node JS several times using "< % % >" and "< %= % >"-->
                             <%if (user === 1){%>
                             Guest User
-                            <%} else {%>
-                            <%= user.displayName%>!
-                            <%}%>
                         </a></li>
-                    <%if (user !== 1){%>
+                    <%} else {%>
+                    <%= user.displayName%>!
+                    </a></li>
+                    <%for (j=0; j<userList.length; j++){%>
+                    <%if (userList[j].userName == user.name.givenName && userList[j].admin == 1){%>
                     <li><a href="/admin">Admin</a></li>
+                    <%}%>
+                    <%}%>
                     <%}%>
                 </ul>
             </div>

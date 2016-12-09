@@ -14,7 +14,7 @@ cur.execute("SELECT imagePath FROM images where uploaded=0")
 cur2 = db.cursor()
 print "something"
 for row in cur.fetchall():
-    if subprocess.call(["wget", "-cP", "/tmp/", "http://192.168.230.126/images/edit/" + os.path.basename(row[0])]) == 0:
+    if subprocess.call(["wget", "-cP", "/tmp/", "http://192.168.190.53/images/edit/" + os.path.basename(row[0])]) == 0:
     #subprocess.call(["rm", "/node/code/assets/images/index.html"])
 	img = Image.open("/tmp/" + os.path.basename(row[0]))
         basewidth = 500

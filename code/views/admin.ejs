@@ -14,7 +14,9 @@
  Again, this is similar to breaking out of html with <?php CODE ?>, but using < % CODE % >
  or, for printing out a single variables value, < %= VARIABLE % >.
  ***************************************************************************************/ %>
-
+<%if (user !== 1){%>
+<%for (j=0; j<userList.length; j++){%>
+<%if (userList[j].userName == user.name.givenName && userList[j].admin == 1){%>
 <html>
 <head>
 
@@ -48,7 +50,7 @@
                     <% } else { %>
                     <li id='home-nav-item'><a href='/memes/logout'>Logout</a></li>
                     <li id='home-nav-item'><a
-                                href='http://192.168.230.126/Default.aspx?email=<%= user._json.email %>&name=<%= user.name.givenName %>'>Create
+                                href='http://192.168.190.53/Default.aspx?email=<%= user._json.email %>&name=<%= user.name.givenName %>'>Create
                             Meme</a></li>
                     <% } %>
                 </ul>
@@ -148,7 +150,7 @@ Delete a user:
     <div id="myDropdown2" class="dropdown-content">
         <% for(j = 0; j < imageList.length; j++ ){ %>
             <%if (imageList[j].imageApproved == 0){%>
-                <a onclick="alertMe2('<%=imageList[j].altText%>')" href="#"><%=imageList[j].altText%></a>
+                <a onclick="alertMe2('<%=imageList[j].altText%>')" href="#"><img src="<%=imageList[j].imagePath%>"><%=imageList[j].altText%></a>
             <%}%>
         <%}%>
     </div>
@@ -252,3 +254,8 @@ Delete a user:
 </script>
 </body>
 </html>
+<%}
+}
+} else {%>
+    unauthorized
+<%}%>
